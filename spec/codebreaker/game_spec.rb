@@ -40,6 +40,7 @@ module Codebreaker
         it "sends invalid message for more than four numbers" do
 	  game.guess('12345')
         end
+	
 	it "sends invalid message for any non-digit character" do
 	  game.guess('1b3b')
         end
