@@ -27,7 +27,7 @@ module Codebreaker
       end
 
       context "invalid guess" do
-        let(:message) { 'You must guess exactly four numbers' }
+        let(:message) { 'You must guess exactly four numbers.' }
 	before(:each) do
           game.start('1234')
 	  output.should_receive(:puts).with(message)
