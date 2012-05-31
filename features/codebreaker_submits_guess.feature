@@ -13,6 +13,11 @@ Feature: code-breaker submits guess
   for each of the exact matches in the first, third and fourth positions.  The
   number match in the second position would be ignored.
 
+  A code-breaker's guess is invalid if it has less than four numbers, more
+  than four numbers, or a non-digit. Invalid guesses should return the message 
+  'You must guess exactly four numbers.' to the code-breaker. For example, the 
+  guesses '123', '12345', and '1d34' should return the invalid guess message.
+	
   Scenario Outline: submit guess
     Given the secret code is "<code>"
     When I guess "<guess>"
@@ -56,3 +61,14 @@ Feature: code-breaker submits guess
       | 1134 | 5511  | --   |
       | 1134 | 1115  | ++   |
       | 1134 | 5111  | +-   |
+
+  Scenario Outline: submit invalid guess
+    Given the secret code is "1234"
+    When I guess "<invalid_guess>"
+    Then I should see "You must guess exactly four numbers."
+
+    Scenarios: invalid guess
+      | invalid_guess |
+      | 123           |
+      | 12345         |
+      | 1d34          |
