@@ -13,11 +13,9 @@ module Codebreaker
     end
 
     def guess(guess)
-<<<<<<< HEAD
       marker = Marker.new(@secret, guess)
       @output.puts '+'*marker.exact_match_count +
 	           '-'*marker.number_match_count
-=======
       if valid_guess?(guess)
 	marker = Marker.new(@secret, guess)
         @output.puts '+'*marker.exact_match_count +
@@ -32,7 +30,6 @@ module Codebreaker
 
       guess_char_count == 4 &&
       /\d{4}/.match(guess)
->>>>>>> validate_guess
     end
   end
 end

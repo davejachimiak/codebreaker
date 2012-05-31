@@ -25,8 +25,6 @@ module Codebreaker
 	  game.guess('1234')
         end
       end
-<<<<<<< HEAD
-=======
 
       context "invalid guess" do
         let(:message) { 'You must guess exactly four numbers.' }
@@ -47,7 +45,6 @@ module Codebreaker
 	  game.guess('1b3b')
         end
       end
->>>>>>> validate_guess
     end
   end
 end
