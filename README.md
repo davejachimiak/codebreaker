@@ -6,7 +6,7 @@ The master branch will contain all extended features. The original branch contai
 
 To play, have at least Ruby 1.8.7 installed, clone, and run 'bin/codebreaker' from the project directory.
 
-##This Version: guess validation
-###includes previous versions: original
+##This version: guess validation feature
+###Includes previous versions: original
 
-This feature was very basic. No new step definitions needed to be added for this feature. Check out the bottom of the codebreaker submits guess feature for guess validation scenarios. Check out the game spec and game.rb to see how the guess validation feature was implemented. The digit options in bin/codebreaker now include all digits (was 1-6) as to not complicate the validation feature.
+This feature is basic. No new step definitions were added. See the bottom of the codebreaker submits guess feature for guess validation scenarios. See the game spec and game.rb to see how the guess validation feature was implemented. The digit options in bin/codebreaker now include all digits (was 1-6) as to not complicate this particular story.
