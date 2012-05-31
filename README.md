@@ -9,4 +9,4 @@ To play, have at least Ruby 1.8.7 installed, clone, and run 'bin/codebreaker' fr
 ##This version: guess validation feature
 ###Includes previous versions: original
 
-This feature is basic. No new step definitions were added. See the bottom of the codebreaker submits guess feature for guess validation scenarios. See the game spec and game.rb to see how the guess validation feature was implemented. The digit options in bin/codebreaker now include all digits (was 1-6) as to not complicate this particular story.
+This feature is basic. No new step definitions were needed, as the new scenario outline used previously made regexs. See the bottom of the codebreaker submits guess feature for invalid guess scenarios. See the game spec and game.rb to see how the guess validation feature was implemented. The digit options in bin/codebreaker now include all digits (was 1-6) as to not complicate this particular story.
