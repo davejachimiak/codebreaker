@@ -12,23 +12,23 @@ To play, have at least Ruby 1.8.7 installed, clone, and run 'bin/codebreaker' fr
 This feature is basic. No new step definitions were needed, as the new scenario outline used previously made regexs. See below for changes made since last feature (original).
 
 #### features/codebreaker_submits_guess.feature
-``` gehrkin
+``` gherkin
 A code-breaker's guess is invalid if it has less than four numbers, more
 than four numbers, or a non-digit. Invalid guesses should return the message
 'You must guess exactly four numbers.' to the code-breaker. For example, the
 guesses '123', '12345', and '1d34' should return the invalid guess message.
-...
-...
-Scenario Outline: submit invalid guess
-Given the secret code is "1234"
-When I guess "<invalid_guess>"
-Then I should see "You must guess exactly four numbers."
+  ...
+  ...
+  Scenario Outline: submit invalid guess
+    Given the secret code is "1234"
+    When I guess "<invalid_guess>"
+    Then I should see "You must guess exactly four numbers."
 
-Scenarios: invalid guess
-| invalid_guess |
-| 123 |
-| 12345 |
-| 1d34 |
+    Scenarios: invalid guess
+      | invalid_guess |
+      | 123           |
+      | 12345         |
+      | 1d34          |
 ```
 
 #### spec / codebreaker / game_spec.rb
