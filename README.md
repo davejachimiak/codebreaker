@@ -39,16 +39,16 @@ module Codebreaker
       context "valid guess" do
         it "sends the mark to output" do
           game.start('1234')
-	  output.should_receive(:puts).with('+++')
-	  game.guess('1235')
+          output.should_receive(:puts).with('+++')
+          game.guess('1235')
         end
         
-	it "congratulates upon perfect guess" do
+        it "congratulates upon perfect guess" do
           game.start('1234')
-	  output.should_receive(:puts).with('++++')
-	  output.should_receive(:puts).with('You won!!!')
-	  game.guess('1234')
-	end
+          output.should_receive(:puts).with('++++')
+          output.should_receive(:puts).with('You won!!!')
+          game.guess('1234')
+        end
       end
       ...
       ...
@@ -67,10 +67,10 @@ module Codebreaker
     ...
     def guess(guess)
       if valid_guess?(guess)
-	marker = Marker.new(@secret, guess)
+        marker = Marker.new(@secret, guess)
         @output.puts '+'*marker.exact_match_count +
-	             '-'*marker.number_match_count
-	@output.puts CODEBREAKER_WINS_MESSAGE if perfect_guess?(guess)
+                     '-'*marker.number_match_count
+        @output.puts CODEBREAKER_WINS_MESSAGE if perfect_guess?(guess)
       else
         @output.puts INVALID_GUESS_MESSAGE
       end
