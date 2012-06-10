@@ -6,32 +6,28 @@ The master branch will contain all extended features. The original branch contai
 
 To play, have at least Ruby 1.8.7 installed, clone, and run 'bin/codebreaker' from the project directory.
 
-##This version: guess validation feature
-###Includes previous versions: original
+##This version: code-breaker wins game feature
+###Includes previous versions: guess validation, original
 
-This feature is basic. No new step definitions were needed, as the new scenario outline used previously made regexs. See below for changes made since last feature (original).
+This feature is also basic. No new step definitions were needed, as the new scenario outline used previously made regexs. The "valid guess sends the mark to output spec" was changed as to differ from the "congratulates upon perfect guess" spec. System exit on win will be implemented next as it will be easier to test from the result of a "prompt code-breaker for new game" feature. See below for changes made since last feature (guess validation).
 
-#### features/codebreaker_submits_guess.feature
+#### features/codebreaker_wins_game.feature
 ``` gherkin
-A code-breaker's guess is invalid if it has less than four numbers, more
-than four numbers, or a non-digit. Invalid guesses should return the message
-'You must guess exactly four numbers.' to the code-breaker. For example, the
-guesses '123', '12345', and '1d34' should return the invalid guess message.
-  ...
-  ...
-  Scenario Outline: submit invalid guess
-    Given the secret code is "1234"
-    When I guess "<invalid_guess>"
-    Then I should see "You must guess exactly four numbers."
+Feature: Codebreaker wins game
 
-    Scenarios: invalid guess
-      | invalid_guess |
-      | 123           |
-      | 12345         |
-      | 1d34          |
+  As a codebreaker
+  I want to be congratulated when I win the game
+  So that I know that I won the game
+  And that I feel good about myself for doing so
+	
+  Scenario: win game
+    Given the secret code is "1234"
+    When I guess "1234"
+    Then I should see "++++"
+    And I should see "You won!!!"
 ```
 
-#### spec / codebreaker / game_spec.rb
+#### spec/codebreaker/game_spec.rb
 ``` ruby
 module Codebreaker
   describe Game do
@@ -40,27 +36,22 @@ module Codebreaker
     ...
     ...
     describe "#guess" do
-      ...
-      ...
-      context "invalid guess" do
-        let(:message) { 'You must guess exactly four numbers.' }
-        before(:each) do
+      context "valid guess" do
+        it "sends the mark to output" do
           game.start('1234')
-          output.should_receive(:puts).with(message)
+	  output.should_receive(:puts).with('+++')
+	  game.guess('1235')
         end
-
-        it "sends invalid message for less than four" do
-          game.guess('123')
-        end
-
-        it "sends invalid message for more than four numbers" do
-          game.guess('12345')
-        end
-
-        it "sends invalid message for any non-digit character" do
-          game.guess('1b3b')
-        end
+        
+	it "congratulates upon perfect guess" do
+          game.start('1234')
+	  output.should_receive(:puts).with('++++')
+	  output.should_receive(:puts).with('You won!!!')
+	  game.guess('1234')
+	end
       end
+      ...
+      ...
     end
   end
 end
@@ -70,34 +61,25 @@ end
 ``` ruby
 module Codebreaker
   class Game
-    INVALID_GUESS_MESSAGE = 'You must guess exactly four numbers.'
+    ...
+    CODEBREAKER_WINS_MESSAGE = 'You won!!!'
     ...
     ...
     def guess(guess)
       if valid_guess?(guess)
-        marker = Marker.new(@secret, guess)
+	marker = Marker.new(@secret, guess)
         @output.puts '+'*marker.exact_match_count +
-                     '-'*marker.number_match_count
+	             '-'*marker.number_match_count
+	@output.puts CODEBREAKER_WINS_MESSAGE if perfect_guess?(guess)
       else
         @output.puts INVALID_GUESS_MESSAGE
       end
     end
-
-    def valid_guess?(guess)
-      guess_char_count = guess.split('').count
-
-      guess_char_count == 4 &&
-      /\d{4}/.match(guess)
+    ...
+    ...
+    def perfect_guess?(guess)
+      guess == @secret
     end
   end
 end
-```
-
-#### bin/codebreaker
-``` ruby
-...
-...
-options = %w[1 2 3 4 5 6 7 8 9 0]
-...
-...
 ```

@@ -21,9 +21,16 @@ module Codebreaker
       context "valid guess" do
         it "sends the mark to output" do
           game.start('1234')
-	  output.should_receive(:puts).with('++++')
-	  game.guess('1234')
+	  output.should_receive(:puts).with('+++')
+	  game.guess('1235')
         end
+        
+	it "congratulates upon perfect guess" do
+          game.start('1234')
+	  output.should_receive(:puts).with('++++')
+	  output.should_receive(:puts).with('You won!!!')
+	  game.guess('1234')
+	end
       end
 
       context "invalid guess" do
